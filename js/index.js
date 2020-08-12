@@ -68,16 +68,46 @@ function showItems(filteredItems) {
     }
 }
 
+function setAllSum(param, oldValue, newValue) {
+    if (oldValue === 0 || oldValue) {
+        param.innerText =  oldValue + newValue
+    }
+    else {
+        param.innerText = newValue
+    }
+}
+
 window.onload = () => {
     const itemsList = allItems()
     const filter = {
         category: 0,
         price: 0
     }
+    const count = document.getElementById('count')
+    const sum = document.getElementById('sum')
+
+    // filter items
     for(item of document.getElementsByClassName('select-control')) {
         item.onchange = (e) => {
             filter[e.target.getAttribute('id').toString()] = e.target.value
             showItems(filterItems(itemsList, filter.category, parseInt(filter.price)))
+        }
+    }
+
+    // set sum
+    for(item of document.getElementsByClassName('product-box__btn')) {
+        item.onclick = (e) => {
+            const parent = e.target.closest('.product-box__item')
+            const itemId = parent.getAttribute('id')
+            const productCount = parseInt(parent.querySelector('.qty__item').value) || 0
+            const price = itemsList.find(item => item._id === itemId) && itemsList.find(item => item._id === itemId).price || 0
+
+            const oldCount = parseInt(count.innerText)
+            const oldSum = parseInt(sum.innerText)
+            const newSum = productCount * price
+
+            setAllSum(count, oldCount, productCount)
+            setAllSum(sum, oldSum, newSum)
         }
     }
 }
