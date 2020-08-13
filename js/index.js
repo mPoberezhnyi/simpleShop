@@ -77,6 +77,20 @@ function setAllSum(param, oldValue, newValue) {
     }
 }
 
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function validateName(name) {
+    if (!name.length || !name.replace(/\s/g, '').length) {
+        return false
+    }
+    else {
+        return true
+    }
+}
+
 window.onload = () => {
     const itemsList = allItems()
     const filter = {
@@ -108,6 +122,43 @@ window.onload = () => {
 
             setAllSum(count, oldCount, productCount)
             setAllSum(sum, oldSum, newSum)
+        }
+    }
+
+    // modal window
+    const createOrder = document.getElementById('createOrder')
+    const orderWindow = document.getElementById('order-window')
+    const orderWindowClose = document.getElementById('order-window-close')
+    const orderWindowOverlay = document.getElementById('order-window-overlay')
+    const orderWindowSend = document.getElementById('order-window-send')
+    
+    createOrder.onclick = () => {
+        orderWindow.classList.add('modal--opened')
+    }
+
+    orderWindowClose.onclick = () => {
+        orderWindow.classList.remove('modal--opened')
+    }
+
+    orderWindowOverlay.onclick = () => {
+        orderWindow.classList.remove('modal--opened')
+    }
+
+    // send form
+    orderWindowSend.onclick = () => {
+        const name = document.querySelector('input[name=name]')
+        const email = document.querySelector('input[name=email]')
+
+        if (validateEmail(email.value) && validateName(name.value)) {
+            alert('Благодарим за покупку на суму ' + sum.innerText + 'грн')
+            count.innerText = 'XXX'
+            sum.innerText = 'XXX'
+            orderWindow.classList.remove('modal--opened')
+            email.value = ''
+            name.value = ''
+        }
+        else {
+            alert('Ошибка заполнения формы')
         }
     }
 }

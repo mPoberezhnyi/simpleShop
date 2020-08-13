@@ -15,7 +15,7 @@
                 <span class="top-cart-info__item">
                      Товаров в корзине - <span class="red-info" id="count">XXX</span>,
                       на сумму <span class="red-info" id="sum">XXX</span> грн</span>
-                <button class="btn-check">Оформить заказ</button>
+                <button class="btn-check" id="createOrder">Оформить заказ</button>
             </div>
         </div><!-- /.top-cart-info -->
 
@@ -230,6 +230,24 @@
             </div><!-- /product-box-->
 
         </section>
+    </div>
+
+    <div class="modal" id="order-window">
+        <div class="modal-overlay" id="order-window-overlay"></div>
+        <div class="modal-window">
+            <div class="modal__header">
+                <h4 class="modal__title">Ваш заказ</h4>  
+                <span class="modal__close" id="order-window-close">X</span>
+            </div>
+            <div class="modal__body">
+                <form action="" class="order-form">
+                    <input type="text" name="name" class="order-form__input" placeholder="Введите ваше имя">
+                    <input type="email" name="email" class="order-form__input" placeholder="Введите ваш email">
+                    <input type="button" class="order-form__input order-form__send" id="order-window-send" value="Отправить">
+                </form>
+            </div>
+        </div>
+        
     </div>
 
     <footer class="bottom-footer bg-beetroot py-1">
